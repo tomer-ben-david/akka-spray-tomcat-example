@@ -11,6 +11,7 @@
         <scala.major.version>2.10</scala.major.version>
         <scala.version>${scala.major.version}.3</scala.version>
         <spray.version>1.2.0</spray.version>
+        <akka.version>2.2.3</akka.version>
     </properties>
 
     <build>
@@ -83,12 +84,21 @@
 
     <dependencies>
 
+        <!-- Scala -->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
         </dependency>
 
+        <!-- Akka -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_${scala.major.version}</artifactId>
+            <version>${akka.version}</version>
+        </dependency>
+
+        <!-- Spray -->
         <dependency>
             <groupId>io.spray</groupId>
             <artifactId>spray-servlet</artifactId>
