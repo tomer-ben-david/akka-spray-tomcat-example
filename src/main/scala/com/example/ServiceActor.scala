@@ -56,17 +56,17 @@ trait Service extends HttpService {
 
   val myRoute =
     path("") {
-//      GET example
       get {
-        respondWithMediaType(`text/html`) { // XML is marshalled to `text/xml` by default, so we simply override here
-          complete {
-            <html>
-              <body>
-                <h1>Say hello to <i>spray-routing</i> on <i>Jetty</i>!</h1>
-              </body>
-            </html>
+       detach() { // this make the below operation async (note for your app to really be async you should  not block the underlying thread!)
+          respondWithMediaType(`text/html`) { // XML is marshalled to `text/xml` by default, so we simply override here
+            complete {
+              <html>
+                <body>
+                  <h1>Say hello to <i>spray-routing</i> on <i>Jetty</i>!</h1>
+                </body>
+              </html>
+            }
           }
-
         }
       }
     } ~
