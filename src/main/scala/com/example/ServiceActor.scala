@@ -40,18 +40,20 @@ class ServiceActor extends Actor with Service {
   def receive = runRoute(myRoute)
 }
 
-case class Order(val id: Int)
-
 // this trait defines our service behavior independently from the service actor
 trait Service extends HttpService {
+//  implicit object OrderJsonFormat extends RootJsonFormat[Order] {
+//    def write(obj: Order): JsValue = JsString(obj.toString)
+//
+//    def read(json: JsValue): Order = json match {
+//      case JsString(str) => Order(str.toInt)
+//    }
+//  }
 
-  implicit object OrderJsonFormat extends RootJsonFormat[Order] {
-    def write(obj: Order): JsValue = JsString(obj.toString)
+  // Very important don't forget to import the implicists otherwise it would not recognize the parsing of your json!
+  import com.example.Person
+  import com.example.PersonJsonImplicits._
 
-    def read(json: JsValue): Order = json match {
-      case JsString(str) => Order(str.toInt)
-    }
-  }
   val myRoute =
     path("") {
 //      GET example
@@ -70,10 +72,13 @@ trait Service extends HttpService {
     } ~
     path("orders") {
       post {
-        entity(as[Order]) { str =>
+        // note you must have import spray.httpx.SprayJsonSupport.sprayJsonMarshaller
+        // import spray.httpx.SprayJsonSupport.sprayJsonUnmarshaller
+        // for following unmarshaling marshaling to work!
+        entity(as[Person]) { person =>
           complete {
             // ... write order to DB
-            new Order(1)
+            person
           }
         }
       }

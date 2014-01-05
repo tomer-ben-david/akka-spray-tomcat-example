@@ -8,7 +8,7 @@ import spray.json.DefaultJsonProtocol
  */
 case class Person(val name: String)
 
-object JsonImplicits extends DefaultJsonProtocol {
+object PersonJsonImplicits extends DefaultJsonProtocol {
   implicit val impPerson = jsonFormat1(Person)
 }
 
