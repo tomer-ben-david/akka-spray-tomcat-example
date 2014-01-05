@@ -3,7 +3,7 @@ akka-spray-tomcat-example
 
 akka spray tomcat example in scala
 
-# Having serialization done by json spray done for you
+# Having serialization done by json spray for you
 
 Lets say you have the following case class (important its a case class for regular classes you will need something a little different)
 
