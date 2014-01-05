@@ -20,4 +20,4 @@ object PersonJsonImplicits extends DefaultJsonProtocol {
 }
 ```
 
-note the *1* in jsonFormat this means your case class has single parameter if it had 2  you would use... jsonFormat2 :)
+note the **1** in jsonFormat this means your case class has single parameter if it had 2  you would use... jsonFormat2 :)
