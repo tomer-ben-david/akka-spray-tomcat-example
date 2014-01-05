@@ -19,3 +19,5 @@ object PersonJsonImplicits extends DefaultJsonProtocol {
   implicit val impPerson = jsonFormat1(Person)
 }
 ```
+
+note the *1* in jsonFormat this means your case class has single parameter if it had 2  you would use... jsonFormat2 :)
