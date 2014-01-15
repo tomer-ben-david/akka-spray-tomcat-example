@@ -20,6 +20,13 @@ object PersonJsonImplicits extends DefaultJsonProtocol {
 }
 ```
 
+Then you can use toJson on your pimped class:
+** You must import spray.json._ otherwise `toJson` won't be recognized! **
+```scala
+import spray.json._
+new Person("somename").toJson
+```
+
 note the `1` in `jsonFormat1` this means your case class has single parameter if it had 2  you would use... `jsonFormat2` :)
 
 # Being async

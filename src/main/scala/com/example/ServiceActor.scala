@@ -51,8 +51,7 @@ trait Service extends HttpService {
 //  }
 
   // Very important don't forget to import the implicists otherwise it would not recognize the parsing of your json!
-  import com.example.Person
-  import com.example.PersonJsonImplicits._
+  import com.example.domain.Person
 
   val myRoute =
     path("") {
@@ -75,6 +74,9 @@ trait Service extends HttpService {
         // note you must have import spray.httpx.SprayJsonSupport.sprayJsonMarshaller
         // import spray.httpx.SprayJsonSupport.sprayJsonUnmarshaller
         // for following unmarshaling marshaling to work!
+        import com.example.util.json.PersonSerializationImplicits._
+        import com.example.util.json.PersonSerializationImplicits.PersonJsonImplicits._
+
         entity(as[Person]) { person =>
           complete {
             // ... write order to DB
