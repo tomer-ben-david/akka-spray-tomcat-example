@@ -1,5 +1,7 @@
 package com.example
 
+import java.util.concurrent.Executors
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import spray.http._
 import MediaTypes._
@@ -19,6 +21,9 @@ import spray.routing.authentication.UserPassAuthenticator
 import spray.routing.authentication.UserPassAuthenticator
 import spray.routing.directives.AuthMagnet.fromContextAuthenticator
 import spray.routing.directives.FieldDefMagnet.apply
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration._
 
 /**
  * @author tomerb
@@ -50,10 +55,26 @@ trait Service extends HttpService {
 //    }
 //  }
 
+
   // Very important don't forget to import the implicists otherwise it would not recognize the parsing of your json!
   import com.example.domain.Person
 
   val myRoute =
+    path("myasyncuri") {
+      get {
+        respondWithMediaType(`text/html`) { // XML is marshalled to `text/xml` by default, so we simply override here
+          complete {
+            Future { // Without the future will take place in the single actor handling spray incoming request - no blocking allowed wihtout the Future.  Spray knows to handle Future instead of plain response.
+                <html>
+                <body>
+                  <h1>Say hello to <i>spray-routing</i> on <i>Jetty</i>!</h1>
+                </body>
+              </html>
+            }
+          }
+        }
+      }
+    } ~
     path("") {
       get {
        detach() { // this make the below operation async (note for your app to really be async you should  not block the underlying thread!)
